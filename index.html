@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+
+    <style>
+
+        body {
+            justify-content: center;
+            align-items: center;
+            display: grid;
+            height: 70vh;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 
+            'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, 
+            sans-serif;
+        }
+
+        .kalkulator {
+            background-color: rgb(197, 222, 245);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 10px 10px 5px rgb(106, 157, 202);
+        }
+
+        input, button {
+            width: 50px;
+            height: 40px;
+            margin: 5px;
+            background-color: rgb(255, 255, 255);
+            border: 2px solid;
+            border-radius: 8px;
+            border-color: rgba(116, 157, 196, 0.726);
+            font-size: 20px;
+
+        }
+
+        input {
+            width: 220px;
+            height: 40px;
+        }
+
+        .button {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+        }
+
+        .button .hapus {
+            background-color: rgb(33, 119, 194);
+            border-color: rgb(28, 94, 151);
+            grid-column: span 2;
+            width: 110px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <div class="kalkulator">
+        <input type="text" id="hasil" disabled>
+        <div class="button">
+            <button onclick="number ('7')">7</button>
+            <button onclick="number ('8')">8</button>
+            <button onclick="number ('9')">9</button>
+            <button onclick="operator ('/')">/</button>
+            <button onclick="number ('4')">4</button>
+            <button onclick="number ('5')">5</button>
+            <button onclick="number ('6')">6</button>
+            <button onclick="operator ('*')">x</button>
+            <button onclick="number ('1')">1</button>
+            <button onclick="number ('2')">2</button>
+            <button onclick="number ('3')">3</button>
+            <button onclick="operator ('-')">-</button>
+            <button onclick="number ('0')">0</button>
+            <button onclick="number ('.')">.</button>
+            <button onclick="work ()">=</button>
+            <button onclick="operator ('+')">+</button>
+            <button class="hapus" onclick="allclear ()">AC</button>
+            <button class="hapus" onclick="del ()">DEL</button>
+        </div>
+    </div>
+
+    <script>
+
+        function number (num) {
+            const display = document.getElementById("hasil");
+            hasil.value += num;
+        }
+
+        function operator (op) {
+            const display = document.getElementById("hasil");
+            hasil.value += ""+ op +"";
+        }
+
+        function work () {
+            const display = document.getElementById("hasil");
+            const input = hasil.value;
+
+            const match = input.match(/^(-?\d+(?:\.\d+)?)\s*([\/\*\-\+])\s*(-?\d+(?:\.\d+)?)$/);
+            
+            if(!match) {
+                hasil.value = "Input tidak valid";
+                return;
+            }
+
+            const a = Number (match[1]);
+            const operator = match[2];
+            const b = Number (match[3]);
+
+            if(operator === "/" && b === 0) {
+                hasil.value = "Tidak dapat dibagi 0";
+                return;
+            }
+
+            let result;
+            switch (operator) {
+                case "/":
+                    result = a / b;
+                    break;
+                case "*":
+                    result = a * b;
+                    break;
+                case "-":
+                    result = a - b;
+                    break;
+                case "+":
+                    result = a + b;
+                    break;
+            
+                default:
+                    break;
+            }
+
+            hasil.value = result;
+        }
+
+        function allclear () {
+            document.getElementById("hasil").value = "";
+        }
+
+        function del () {
+            const display = document.getElementById("hasil");
+            hasil.value = hasil.value.slice(0,-1);
+        }
+
+    </script>
+
+</body>
+</html>
